@@ -7,27 +7,28 @@
     <link rel="stylesheet" type="text/css" href="StylesFolder/loginStyles.css">
 </head>
 <body>
-    <h1>Signup</h1>
+    
     <div id="form1">
-        <form action="processSignup.php" method="POST">
+        <form class="login-form" action="processSignup.php" method="POST">
+            <h1>Signup</h1>
             <p>
                 <label>E-mail</label>
-                <input type="email" id="email" name="email"/>
+                <input required="" type="email" id="email" name="email"/>
             </p>
             <p>
                 <label>Username</label>
-                <input type="text" id="user" name="user"/>
+                <input required="" type="text" id="user" name="user"/>
             </p>
             <p>
                 <!-- Password must contain least one number and one uppercase and lowercase letter, and at least 8 or more characters-->
                 <label>Password</label> 
-                <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="pass" name="pass"/>
+                <input required="" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="pass" name="pass"/>
                 <br>
                 <label>Password must contain least one number and one uppercase and lowercase letter, and at least 8 or more characters</label>
             </p>
             <p>
                 <label>Re-enter Password</label>
-                <input type="password" id="Repass" name="Repass"/>
+                <input required="" type="password" id="Repass" name="Repass"/>
             </p>
             <p>
                 <input type="submit" value="Register" id="btn" name="Login"/>
