@@ -1,22 +1,36 @@
-<script>  
-    function validation()  
-    {  
-        var id=document.f1.user.value;  
-        var ps=document.f1.pass.value;  
-        if(id.length=="" && ps.length=="") {  
-            alert("User Name and Password fields are empty");  
-            return false;  
-        }  
-        else  
-        {  
-            if(id.length=="") {  
-                alert("User Name is empty");  
-                return false;  
-            }   
-            if (ps.length=="") {  
-            alert("Password field is empty");  
-            return false;  
-            }  
-        }                             
-    }  
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<nav>
+        
+        <div class="tabs">
+            <ul id="tabs_cont" class="tabs_cont">
+                <li class="tab" onclick="headTo('home.php','current')">Home</li>
+                <li class="tab" onclick="headTo('resources.php','current')">Resources</li>
+                <li class="tab" onclick="headTo('index.php','current')">Dashboard</li>
+                <li class="tab">
+                    <?php if (isset($_SESSION['email'])) :?>
+                    <span class="user_icon_container" onclick="toggle_logout()"><img
+                            src="<?php echo $_SESSION['profile_pic'] ; ?>" alt="user" class="user_icon" id="user_icon"></span>
+                    <span class="drop_down" id="logout"><a href="index.php?logout=1">Log out</a></span>
+                    <?php else : ?>
+                    <span class="user_icon_container" onclick="toggle_logout()"><img
+                            src="files/images/profile_pics/default_icon.jpg" alt="user" class="user_icon" id="user_icon"></span>
+                    <span class="drop_down" id="logout"><a href="login.php">Log in</a></span>
+                    <?php endif ?>
+                </li>
+            </ul>
+            <div class="burger" id="burger" onclick="toggle_tabs();">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </nav>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
