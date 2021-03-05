@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="form1">
-        <form action="processLogin.php" method="POST">
+        <form action="submitRequest.php" method="POST">
             <p>
                 <label>Name</label>
                 <input type="text" id="user" name="user"/>
@@ -46,6 +46,15 @@
                     <input type="text" id="user" name="user"/>
                 </p>
             </div>
+
+            <div id="evidence">
+                <p>Upload files Cotaining evidence</p>
+                <label for="myfile">Select a file:</label>
+                <input type="file" id="myfile" name="myfile">
+            </div>
+            <br>
+            
+            <input type="submit" value="Submit">
         </form>
     </div>
 </body>
