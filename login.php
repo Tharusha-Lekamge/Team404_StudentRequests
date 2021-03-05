@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="form1">
-        <form action="processLogin.php" onsubmit="return validation()" method="POST">
+        <form action="processLogin.php" method="POST">
             <p>
                 <label>Username</label>
                 <input type="text" id="user" name="user"/>
