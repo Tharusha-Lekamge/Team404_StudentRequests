@@ -1,0 +1,17 @@
+body{
+    background-color: bisque;
+}
+#form1{
+    border: 1px solid green;
+    width: 40%;
+    border-radius: 5px;
+    background-color: aliceblue;
+    padding: 50px;
+    align-self: auto;
+}
+#btn{
+    color: blueviolet;
+    background-color: aqua;
+    padding: 5px;
+    margin-left: 70%;
+}
