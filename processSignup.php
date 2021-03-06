@@ -12,7 +12,7 @@ if(isset($_POST['signup'])){
     
     $username=$_POST['user'];
     $email=$_POST['email'];
-    $password=password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password=password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
     $checkQuery="SELECT * FROM users where (username=:username ||  email=:email)";
     $check = $dbh -> prepare($checkQuery);

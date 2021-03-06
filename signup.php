@@ -9,7 +9,7 @@
 <body>
     
     <div id="form1">
-        <form class="login-form" action="processSignup.php" method="POST">
+        <form class="login-form" onsubmit = "return validation()" action="processSignup.php" method="POST" >
             <h1>Signup</h1>
             <p>
                 <label>E-mail</label>
@@ -31,7 +31,7 @@
                 <input required="" type="password" id="Repass" name="Repass"/>
             </p>
             <p>
-                <input type="submit" value="Register" id="btn" name="Login"/>
+                <input type="submit" value="Register" id="btn" name="signup"/>
             </p>
         </form>
     </div>
@@ -40,7 +40,12 @@
     function validation()  
     {  
         var id=document.f1.user.value;  
-        var ps=document.f1.pass.value;  
+        var ps=document.f1.pass.value; 
+        if (Repass.innerHTML == pass.innerHTML){
+            alert("Correct";)
+        } else{
+            alert("Password no match")
+        }
         if(id.length=="" && ps.length=="") {  
             alert("User Name and Password fields are empty");  
             return false;  

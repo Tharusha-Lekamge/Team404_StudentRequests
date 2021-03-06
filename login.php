@@ -10,10 +10,6 @@
 
 <body class="text-center">
 
-    
-    <br>
-
-
         <form action="processLogin.php" class="login-form" method="POST">
         <h1 class="h3 mb-3 font-weight-normal">Please Log in</h1>
             <p>
