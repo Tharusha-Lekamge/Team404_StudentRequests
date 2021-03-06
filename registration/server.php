@@ -49,12 +49,21 @@ if (isset($_POST['reg_user'])) {
   if (count($errors) == 0) {
   	$password = md5($password_1);//encrypt the password before saving in the database
 
-  	$query = "INSERT INTO users (username, email, password) 
-  			  VALUES('$username', '$email', '$password')";
+    if (isset($_POST['user_type'])) {
+			$user_type = e($_POST['user_type']);
+			$query = "INSERT INTO users (username, email, user_type, password) 
+					  VALUES('$username', '$email', '$user_type', '$password')";
+			mysqli_query($db, $query);
+			$_SESSION['success']  = "New user successfully created!!";
+			header('location: ../adminhome.php');
+    }else{  
+  	$query = "INSERT INTO users (username, email, password, user_type) 
+  			  VALUES('$username', '$email', '$password', 'user')";
   	mysqli_query($db, $query);
   	$_SESSION['username'] = $username;
   	$_SESSION['success'] = "You are now logged in";
   	header('location: ../index.php');
+    }
   }
 }
 
@@ -74,14 +83,62 @@ if (isset($_POST['login_user'])) {
         $password = md5($password);
         $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
         $results = mysqli_query($db, $query);
-        if (mysqli_num_rows($results) == 1) {
+
+        if (mysqli_num_rows($results) == 1) { //user found
+          $logged_in_user = mysqli_fetch_assoc($results);
+          //If admin logs in
+          if ($logged_in_user['user_type'] == 'admin') {
+            $_SESSION['user'] = $logged_in_user;
+            $_SESSION['success']  = "You are now logged in";
+            header('location: ../adminhome.php');		  
+          }else{
           $_SESSION['username'] = $username;
           $_SESSION['success'] = "You are now logged in";
           header('location: ../index.php');
+          }
         }else {
             array_push($errors, "Wrong username/password combination");
         }
     }
-  }
-  
-  ?>
+}
+
+
+//additional functions
+function getUserById($id){
+	global $db;
+	$query = "SELECT * FROM users WHERE id=" . $id;
+	$result = mysqli_query($db, $query);
+
+	$user = mysqli_fetch_assoc($result);
+	return $user;
+}
+
+// escape string
+function e($val){
+	global $db;
+	return mysqli_real_escape_string($db, trim($val));
+}
+
+function display_error() {
+	global $errors;
+
+	if (count($errors) > 0){
+		echo '<div class="error">';
+			foreach ($errors as $error){
+				echo $error .'<br>';
+			}
+		echo '</div>';
+	}
+}
+
+//Check if there is a user logged in.
+//Only logged in people will see pages
+function isLoggedIn(){
+	if (isset($_SESSION['user'])) {
+		return true;
+	}else{
+		return false;
+	}
+}
+
+?>
