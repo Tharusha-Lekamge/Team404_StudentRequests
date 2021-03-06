@@ -1,10 +1,11 @@
 <?php include('server.php') ?>
 <!-- To catch the details passed from the form to self page -->
+<?php include('functions.php') ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Registration system PHP and MySQL</title>
+  <title>Register</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
