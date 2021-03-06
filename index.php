@@ -9,7 +9,7 @@
   if (isset($_GET['logout'])) {
   	session_destroy();
   	unset($_SESSION['username']);
-  	header("location: regustration/login.php");
+  	header("location: registration/login.php");
   }
 ?>
 <!DOCTYPE html>
