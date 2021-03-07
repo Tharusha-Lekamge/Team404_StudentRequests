@@ -6,7 +6,7 @@ panel.addEventListener("click",(e)=>{
     e.preventDefault();
     if (e.target.tagName === "BUTTON"){
         let message = (panel.children[0].value);
-        console.log(message)
+        // console.log(message)
         const li = document.createElement("li");
         li.classList.add("media");
         li.innerHTML=` 
