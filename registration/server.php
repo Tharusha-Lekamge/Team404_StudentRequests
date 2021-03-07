@@ -141,4 +141,14 @@ function isLoggedIn(){
 	}
 }
 
+//Check if the user is admin
+function isAdmin()
+{
+	if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin' ) {
+		return true;
+	}else{
+		return false;
+	}
+}
+
 ?>

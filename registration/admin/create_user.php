@@ -1,9 +1,11 @@
+<!-- USE Phpmyadmin to create first admin -->
+
 <?php include('./server.php') ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Registration system PHP and MySQL - Create user</title>
-	<link rel="stylesheet" type="text/css" href="../style.css">
+	<link rel="stylesheet" type="text/css" href="./style.css">
 	<style>
 		.header {
 			background: #003366;
