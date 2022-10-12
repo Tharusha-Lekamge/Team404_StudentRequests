@@ -1,26 +1,29 @@
-# Team404_StudentRequests
-The Final project of the Engineering Skill Development module
+### Studemt Request Management System
+## Problem Statement
+students send requests to academic staff on matters such as late add/drop requests, extend assignment submission deadlines, repeat exams as first attempt with the next batch etc. Lecturers can accept, decline or request for additional details on the requests. Lecturers can also make comments on the requests made by the students.
 
-Properties needed-
-1. User registration and login
-  i. Two account types with different landing pages
-  ii. And priviledges
-  
- 2. Request submission form - 
-  i. Connect to a DB
-  ii. Students can view only their requests
-  iii. Admins can view any request
-  iv. There should be one comment thread per each submission
-  v. File uploading should be enabled.
-  
- 3. Request State - 
-  i. Admins can accept or deny requests.
-  ii. They can request additional details.
-  
- 4. Filters - 
-  i. Admins can filter requests by name, date, etc...
-  
- 5. ADD A USER GUIDE
-  i. Interface should be simple
-  ii. Should have a dashboard.
-  iii. Less clutter in workspace.
+## System Requirements
+1. Has three types of users
+   1. Students
+      1. Can submit a new request.
+      2. View all requests submitted by the user.
+      3. Add additional details to the submitted requests.
+      4. Filter requests by
+         1. Approval status
+         2. Type of request
+   2. Staff
+      1. Select each student request.
+      2. View all details of the request.
+      3. Approve or decline each request.
+      4. Request for missing details.
+      5. Make comments on the request.
+      6. Filter requests by
+         1. Approval status
+         2. Type of request
+         3. Student index number
+         4. Student name
+   3. Admins
+      1. Can add accounts
+      2. Change account permissions
+2. Has a comments system
+   1. Show comments in thread view.
