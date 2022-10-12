@@ -27,3 +27,7 @@ students send requests to academic staff on matters such as late add/drop reques
       2. Change account permissions
 2. Has a comments system
    1. Show comments in thread view.
+
+## Architecture
+
+This system uses MVC architecture with a RESTful API
