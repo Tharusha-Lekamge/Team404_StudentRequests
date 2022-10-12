@@ -3,12 +3,18 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
   username: {
     type: String,
-    required: true,
+    required: [true, "username Field cannot be empty"],
     unique: true,
   },
   password: {
     type: String,
     required: true,
+    minLength: 8,
+  },
+  passwordConfirm: {
+    type: String,
+    required: true,
+    minLength: 8,
   },
   indexNo: {
     type: String,
@@ -16,6 +22,7 @@ const userSchema = mongoose.Schema({
   accountType: {
     type: String,
     required: true,
+    enum: ["student", "staff", "admin"],
   },
 });
 

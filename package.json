@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "node server.js",
-    "docs": "apidoc -i controllers/ -o apidoc/"
+    "docs": "apidoc -i controllers -o docs"
   },
   "repository": {
     "type": "git",
