@@ -13,10 +13,6 @@ const requestSchema = mongoose.Schema({
   additionalDetails: {
     type: String,
   },
-  type: {
-    type: String,
-    required: true,
-  },
   approvalStatus: {
     type: String,
     required: true,
