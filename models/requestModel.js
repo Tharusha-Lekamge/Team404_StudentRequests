@@ -18,7 +18,7 @@ const requestSchema = mongoose.Schema({
     },
   },
   requestInfo: {
-    type: Text,
+    type: String,
     required: true,
   },
   additionalDetails: {

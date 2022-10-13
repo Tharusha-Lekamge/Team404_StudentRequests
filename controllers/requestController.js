@@ -18,6 +18,13 @@ const Request = require("../models/requestModel");
  */
 exports.createRequest = catchAsync(async (req, res, next) => {
   const newRequest = await Request.create(req.body);
+  if (!newRequest) {
+    return next(new AppError("No new request is created", 404));
+  }
+  res.status(201).json({
+    status: "New request submitted successfully",
+    request: newRequest,
+  });
 });
 
 /**
