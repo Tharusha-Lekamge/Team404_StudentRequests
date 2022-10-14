@@ -43,16 +43,90 @@ exports.createRequest = catchAsync(async (req, res, next) => {
  * @apiErrorExample
  */
 exports.getAllRequests = catchAsync(async (req, res, next) => {
-  const queryObj = { ...req.query }; // Get a hard copy of the query object
-  const excludedFields = ["page", "sort", "limit", "fields"]; // Special fields in the query needed for other applications
-  excludedFields.forEach((el) => delete queryObj[el]); // Delete above special fields from the query object for filtering
-
-  // First Build the query without awaiting the results and after chaining all functionalities, await the query
-  const query = Request.find(queryObj);
-
-  const requests = await query;
+  try{
+    const queryObj = { ...req.query }; // Get a hard copy of the query object
+    const excludedFields = ["page", "sort", "limit", "fields"]; // Special fields in the query needed for other applications
+    excludedFields.forEach((el) => delete queryObj[el]); // Delete above special fields from the query object for filtering
+  
+    // First Build the query without awaiting the results and after chaining all functionalities, await the query
+    const query = Request.find(queryObj);
+  
+    const requests = await query;
+    res.status(200).json({
+      status: "Success",
+      data: {
+        requests: requests,
+      },
+    });
+  
+  }catch(err){
+    res.status(400).json({
+      status: "Failed to get",
+      data: {
+        err,
+      },
+    });
+  }
 });
 
-exports.setApproval = catchAsync(async (req, res, next) => {});
+exports.setApproval = catchAsync(async (req, res, next) => {
+  try{
+    let result = await Request.findByIdAndUpdate(req.body.id,{approvalStatus:req.body.type});
+    res.status(200).json({
+      status: "Success",
+      data: {
+        result: req.id,
+      },
+    });
+  
+  }catch(err){
+    res.status(400).json({
+      status: "Failed to approve",
+      data: {
+        err,
+      },
+    });
+  }
+  
+});
 
-exports.addAdditionalInfo = catchAsync(async (req, res, next) => {});
+exports.getRequestsbyStudentId = catchAsync(async (req, res, next) => {
+  try{
+    let requests = await Request.find({userIndexNo:req.body.userid});
+    res.status(200).json({
+      status: "Success",
+      data: {
+        requests: requests,
+      },
+    });
+  
+  }catch(err){
+    res.status(400).json({
+      status: "Failed to get requests",
+      data: {
+        err,
+      },
+    });
+  }
+  
+});
+
+exports.addAdditionalInfo = catchAsync(async (req, res, next) => {
+  try{
+    let result = await Request.findByIdAndUpdate(req.body.id,{additionalDetails:req.body.addAdditionalInfo});
+    res.status(200).json({
+      status: "Success",
+      data: {
+        result: req.id,
+      },
+    });
+  
+  }catch(err){
+    res.status(400).json({
+      status: "Failed to add",
+      data: {
+        err,
+      },
+    });
+  }
+});
