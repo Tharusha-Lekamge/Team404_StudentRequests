@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     minLength: 8,
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -20,6 +21,7 @@ const userSchema = mongoose.Schema({
       // On CREATE and SAVE only
       return el === this.password;
     },
+    select: false,
   },
   indexNo: {
     type: String,
