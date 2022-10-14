@@ -7,11 +7,8 @@ const router = express.Router();
 router
   .route("/")
   .post(requestController.createRequest)
-  .get(authController.protect, requestController.getAllRequests);
-
-router
-  .route("/approve")
-  .post(requestController.setApproval);
+  .get(authController.protect, requestController.getAllRequests)
+  .patch(requestController.setApproval);
 
 router
   .route("/get")
