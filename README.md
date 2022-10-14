@@ -30,7 +30,8 @@ students send requests to academic staff on matters such as late add/drop reques
 
 ## Architecture
 
-This system uses MVC architecture with a RESTful API
+This system uses Client-Server architecture.
+Used Model
 
 ## Features
 
