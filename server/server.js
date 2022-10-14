@@ -25,8 +25,6 @@ mongoose
   })
   .then(() => {
     // eslint-disable-next-line no-console
-    // console.log(con.connections);
-    // eslint-disable-next-line no-console
     console.log("DB connection set");
   });
 
@@ -46,6 +44,7 @@ process.on("unhandledRejection", (err) => {
 
   // This is much better
   server.close(() => {
+    console.log("SERVER CLOSED");
     process.exit(1);
   });
 });
