@@ -40,6 +40,12 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Check if an entered password matches with the password stored in the databse
+// Available on all user documents
+userSchema.methods.correctPassword = async function (candidatePass, userPass) {
+  return await bcrypt.compare(candidatePass, userPass);
+};
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

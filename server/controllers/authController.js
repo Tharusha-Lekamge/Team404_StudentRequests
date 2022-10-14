@@ -5,6 +5,17 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 /**
+ * 
+ * @param {document} user 
+ * @returns jwt token with the user.__id 
+ */
+const signToken = (user) => {
+  return jwt.sign({ id: user.__id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
+};
+
+/**
  * Creates a new user with given details, save it to the database, and return a jwt with user details.
  * Cannot be used to create admins. any attempt to create admin accounts will result in aan error.
  * @api {post} /signup/
@@ -28,9 +39,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
       accountType: req.body.accountType,
     });
 
-    const token = jwt.sign({ id: newUser.__id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES,
-    });
+    const token = signToken(newUser);
 
     res.status(200).json({
       status: success,
@@ -58,8 +67,26 @@ exports.createAdmin = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     accountType: "admin",
   });
+  const token = signToken(newUser);
+
+    res.status(200).json({
+      status: success,
+      token,
+    });
 });
 
+/**
+ * Creates a new user with given details, save it to the database, and return a jwt with user details.
+ * Cannot be used to create admins. any attempt to create admin accounts will result in aan error.
+ * @api {post} /login/
+ * @apiName login
+ * @apiGroup Auth
+ * @apiParams req.body - Should contain username and password
+ * @apiSuccess
+ * @apiSuccessExample
+ * @apiError
+ * @apiErrorExample
+ */
 exports.login = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
 
@@ -75,6 +102,36 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError(errorString, 400));
   }
   // Checking for user
-  const user = User.findOne();
+  const user = await User.findOne({ username }).select("+password");
+
+  if (!user) {
+    return next(new AppError("Incorrect email"), 401);
+  }
+
+  if (!(await user.correctPassword(password, user.password))) {
+    return next(new AppError("Incorrect password"), 401);
+  }
   // Send token to user
+  const token = signToken(user);
+
+  res.status(200).json({
+    status: success,
+    token,
+  });
 });
+
+
+exports.protect = catchAsync(async (req, res, next) =>{
+  // Check if token exists
+
+  // Validate token
+
+  // Check if user exists
+
+  // Check if user changed password after jwt is issued
+  
+  // Check accountType
+
+  // Give access
+  next();
+})
