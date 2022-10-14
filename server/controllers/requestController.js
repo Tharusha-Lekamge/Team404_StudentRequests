@@ -6,14 +6,14 @@ const Request = require("../models/requestModel");
 /**
  * Creates a new Request document using the data given in the res.body.
  * All required data should be enclosed in req.body.
- * @api {post} /request/ 
+ * @api {post} /request/
  * @apiName createRequest
  * @apiGroup Request
- * @apiParams req.body - should contain all relavant details in json format. 
+ * @apiParams req.body - should contain all relavant details in json format.
  * @requiredFields userIndexNo, userName, requestType, requestInfo, submittedDate
  * @apiSuccess
  * @apiSuccessExample
- * @apiError 
+ * @apiError
  * @apiErrorExample
  */
 exports.createRequest = catchAsync(async (req, res, next) => {
@@ -31,7 +31,7 @@ exports.createRequest = catchAsync(async (req, res, next) => {
  * Finds all requests made by every student. Should be only used by staff. Returns a JSON object
  * with all matching results. Filtering and sorting are inbuilt and should be passed via
  * query parameters.
- * @api {get} /request/ 
+ * @api {get} /request/
  * @apiName getAllRequests
  * @apiGroup Request
  * @apiParams req.query - Can be empty. Else pass the parameters for filtering and sorting purposes.
@@ -39,7 +39,7 @@ exports.createRequest = catchAsync(async (req, res, next) => {
  * @availableFilters userIndexNo, userName, requestType, approvalStatus
  * @apiSuccess
  * @apiSuccessExample
- * @apiError 
+ * @apiError
  * @apiErrorExample
  */
 exports.getAllRequests = catchAsync(async (req, res, next) => {
@@ -56,4 +56,3 @@ exports.getAllRequests = catchAsync(async (req, res, next) => {
 exports.setApproval = catchAsync(async (req, res, next) => {});
 
 exports.addAdditionalInfo = catchAsync(async (req, res, next) => {});
-
