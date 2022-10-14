@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     minLength: 8,
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -20,6 +21,7 @@ const userSchema = mongoose.Schema({
       // On CREATE and SAVE only
       return el === this.password;
     },
+    select: false,
   },
   indexNo: {
     type: String,
@@ -37,6 +39,12 @@ userSchema.pre("save", async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
+
+// Check if an entered password matches with the password stored in the databse
+// Available on all user documents
+userSchema.methods.correctPassword = async function (candidatePass, userPass) {
+  return await bcrypt.compare(candidatePass, userPass);
+};
 
 const User = mongoose.model("User", userSchema);
 
