@@ -1,13 +1,14 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 
 const User = require("../models/userModel");
 
 /**
- * 
- * @param {document} user 
- * @returns jwt token with the user.__id 
+ *
+ * @param {document} user
+ * @returns jwt token with the user.__id
  */
 const signToken = (user) => {
   return jwt.sign({ id: user.__id }, process.env.JWT_SECRET, {
@@ -69,10 +70,10 @@ exports.createAdmin = catchAsync(async (req, res, next) => {
   });
   const token = signToken(newUser);
 
-    res.status(200).json({
-      status: success,
-      token,
-    });
+  res.status(200).json({
+    status: success,
+    token,
+  });
 });
 
 /**
@@ -120,18 +121,34 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 });
 
-
-exports.protect = catchAsync(async (req, res, next) =>{
-  // Check if token exists
+/**
+ *
+ */
+exports.protect = catchAsync(async (req, res, next) => {
+  // Check if token exists in the Header -> Authentication -> Bearer
+  let token;
+  // Check if Authorization header is set
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  // If there is no token
+  if (!token) {
+    return next(new AppError("No valid user", 401));
+  }
 
   // Validate token
+  // Converted the function to return a promise
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // Check if user exists
 
   // Check if user changed password after jwt is issued
-  
+
   // Check accountType
 
   // Give access
   next();
-})
+});
