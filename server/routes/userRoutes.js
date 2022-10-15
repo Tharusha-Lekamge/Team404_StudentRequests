@@ -11,7 +11,7 @@ router.route("/login").post(authController.login);
 router.route("/").get(authController.protect, userController.getAllUsers);
 
 router
-  .route("/:id")
+  .route("/id")
   .post(userController.createUser)
   .get(userController.getUser)
   .patch(userController.updateUser)
