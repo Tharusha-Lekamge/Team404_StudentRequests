@@ -24,6 +24,7 @@ app.all('*', (req, res, next) => {
 });
 
 // Need to add err to catch it
-//app.use(globalErrorHandler);
+app.use(globalErrorHandler);
+
 
 module.exports = app;
