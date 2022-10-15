@@ -7,7 +7,7 @@ const router = express.Router();
 router
   .route("/")
   .post(requestController.createRequest)
-  .get(authController.protect, requestController.getAllRequests)
+  .get(requestController.getAllRequests)
   .patch(requestController.setApproval);
 
 router

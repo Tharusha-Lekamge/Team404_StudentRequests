@@ -31,7 +31,11 @@ students send requests to academic staff on matters such as late add/drop reques
 ## Architecture
 
 This system uses Client-Server architecture.
-Used Model
+Used Models -
+1. User model
+2. Request model
+
+Used Behaviour Driven development for development and testing the system.
 
 ## Features
 
