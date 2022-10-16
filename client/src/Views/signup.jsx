@@ -11,12 +11,14 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Img from "../photos/Login.jpg";
 import { Link as RouterLink, Outlet } from "react-router-dom";
+import { useState } from "react";
 
-async function loginUser(credentials) {
-  return fetch("http://localhost:3000/api/v1/user/login", {
+async function signUpUser(credentials) {
+  return fetch("http://localhost:3000/api/v1/user/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,27 +31,20 @@ async function loginUser(credentials) {
 
 const theme = createTheme();
 
-export default function SignUpSide() {
+export default function SignUpSide({ setToken }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    alert(
+    const response = await signUpUser(
       JSON.stringify({
         username: data.get("username"),
         password: data.get("password"),
-      })
-    );
-    const response = await loginUser(
-      JSON.stringify({
-        username: data.get("username"),
-        password: data.get("password"),
+        passwordConfirm: data.get("confirmpassword"),
+        accountType: data.get("select"),
       })
     );
     alert(JSON.stringify(response));
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
+    setToken(response.token, "session");
   };
 
   return (
@@ -76,7 +71,7 @@ export default function SignUpSide() {
           <Box
             sx={{
               my: 8,
-              mx: 30,
+              mx: "20%",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -123,27 +118,31 @@ export default function SignUpSide() {
                 type="password"
                 id="confirmpassword"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              <FormControl sx={{ minWidth: 100 }} fullWidth margin="normal">
+                <InputLabel id="select-label">Select</InputLabel>
+                <Select
+                  labelId="select-label"
+                  id="select"
+                  name="select"
+                  label="Select"
+                  fullWidth
+                >
+                  <MenuItem value={"student"}>Student</MenuItem>
+                  <MenuItem value={"staff"}>Staff</MenuItem>
+                </Select>
+              </FormControl>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Sign Up
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link component={RouterLink} to="/" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"Already have an account? Sign In"}
                   </Link>
                 </Grid>
               </Grid>

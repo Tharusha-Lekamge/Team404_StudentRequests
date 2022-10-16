@@ -29,16 +29,17 @@ async function loginUser(credentials) {
 
 const theme = createTheme();
 
-export default function SignInSide() {
+export default function SignInSide({ setToken }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    alert(
-      JSON.stringify({
-        username: data.get("username"),
-        password: data.get("password"),
-      })
-    );
+    // alert(
+    //   JSON.stringify({
+    //     username: data.get("username"),
+    //     password: data.get("password"),
+    //     rem: data.get("remember"),
+    //   })
+    // );
     const response = await loginUser(
       JSON.stringify({
         username: data.get("username"),
@@ -46,10 +47,9 @@ export default function SignInSide() {
       })
     );
     alert(JSON.stringify(response));
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
+    data.get("remember")
+      ? setToken(response.token, "local")
+      : setToken(response.token, "session");
   };
 
   return (
@@ -116,6 +116,7 @@ export default function SignInSide() {
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
+                name="remember"
                 label="Remember me"
               />
               <Button

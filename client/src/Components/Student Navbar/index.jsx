@@ -25,7 +25,7 @@ export const StudentNavbar = () => {
       <Box component="nav">
         <AppBar position="static">
           <Toolbar>
-            <IconButton onClick={toggleSlider}>
+            <IconButton onClick={toggleSlider} sx={{ mr: 2 }}>
               <Menu />
             </IconButton>
             <Typography>Student Management System</Typography>
