@@ -43,7 +43,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     const token = signToken(newUser);
 
     res.status(200).json({
-      status: success,
+      status: "success",
       token,
     });
   }
@@ -71,7 +71,7 @@ exports.createAdmin = catchAsync(async (req, res, next) => {
   const token = signToken(newUser);
 
   res.status(200).json({
-    status: success,
+    status: "success",
     token,
   });
 });
@@ -116,7 +116,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const token = signToken(user);
 
   res.status(200).json({
-    status: success,
+    status: "success",
     token,
   });
 });

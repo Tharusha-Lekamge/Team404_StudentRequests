@@ -11,22 +11,23 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FormControl, Select, MenuItem, InputLabel, Card } from "@mui/material";
+import { Edit } from "@mui/icons-material";
 
 const theme = createTheme();
 
-export default function StudentNewRequest() {
+export default function StudentEditRequest({ currentData }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    alert(
-      JSON.stringify({
-        subject: data.get("subject"),
-        index: data.get("index"),
-        name: data.get("name"),
-        type: data.get("type"),
-        additional: data.get("additional"),
-      })
-    );
+    // alert(
+    //   JSON.stringify({
+    //     subject: data.get("subject"),
+    //     index: data.get("index"),
+    //     name: data.get("name"),
+    //     type: data.get("type"),
+    //     additional: data.get("additional"),
+    //   })
+    // );
   };
 
   return (
@@ -47,10 +48,10 @@ export default function StudentNewRequest() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <Edit />
           </Avatar>
           <Typography component="h1" variant="h5">
-            New Request
+            Edit Request
           </Typography>
           <Box
             component="form"
@@ -67,12 +68,12 @@ export default function StudentNewRequest() {
             >
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="Subject"
+                  value={currentData.name}
                   name="subject"
                   required
                   fullWidth
                   id="subject"
-                  label="Subject"
+                  label={currentData.name}
                   autoFocus
                 />
               </Grid>

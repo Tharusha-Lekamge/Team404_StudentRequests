@@ -10,19 +10,30 @@ import { Admin } from "./Views/admin";
 import { Staff } from "./Views/staff";
 import { StaffViewRequest } from "./Components/Staff View Request";
 import SignUpSide from "./Views/signup";
+import StudentEditRequest from "./Components/Student Edit Request";
+import useToken from "./hooks/useToken";
+import { Navigate } from "react-router";
 
 function App() {
-  const [token, setToken] = useState();
+  const { token, setToken } = useToken();
 
-  // if (!token) {
-  //   return <SignInSide />;
-  // }
+  if (!token) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="" element={<SignInSide setToken={setToken} />} />
+          <Route path="signup" element={<SignUpSide setToken={setToken} />} />
+        </Routes>
+      </Router>
+    );
+  }
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SignInSide />} />
-        <Route path="signup" element={<SignUpSide />} />
-        <Route path="student/" element={<Student />}>
+        <Route path="" element={<Navigate to="student" replace />} />
+        <Route path="signup" element={<Student />} />
+        <Route path="student" element={<Student />}>
           <Route path="newrequest" element={<StudentNewRequest />} />
           <Route path="oldrequests" element={<StudentRequestTable />} />
         </Route>
