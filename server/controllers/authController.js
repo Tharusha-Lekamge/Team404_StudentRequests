@@ -11,9 +11,13 @@ const User = require("../models/userModel");
  * @returns jwt token with the user.__id
  */
 const signToken = (user) => {
-  return jwt.sign({ id: user.__id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
-  });
+  return jwt.sign(
+    { id: user.__id, username: user.username, type: user.accountType },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES,
+    }
+  );
 };
 
 /**
