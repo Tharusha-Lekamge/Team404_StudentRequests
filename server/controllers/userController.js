@@ -3,102 +3,61 @@ const AppError = require("../utils/appError");
 
 const User = require("../models/userModel");
 
-
+exports.createUser = catchAsync(async (req, res, next) => {});
 exports.deleteUser = catchAsync(async (req, res, next) => {
-   
-    try{
-        let user = await User.deleteOne({indexNo:req.body.id});
-        res.status(200).json({
-          status: "Success",
-          data: {
-            requests: user,
-          },
-        });
-      
-      }catch(err){
-        res.status(400).json({
-          status: "Failed to get user",
-          data: {
-            err,
-          },
-        });
-      }
-      
+  let user = await User.deleteOne({ indexNo: req.body.id });
+  if (!user) {
+    return next(new AppError("Cannot find the specified user"), 401);
+  }
+  res.status(200).json({
+    status: "Success",
+    data: {
+      requests: user,
+    },
+  });
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-    try{
-        let users = await User.find();
-        res.status(200).json({
-          status: "Success",
-          data: {
-            requests: users,
-          },
-        });
-      
-      }catch(err){
-        res.status(400).json({
-          status: "Failed to get users",
-          data: {
-            err,
-          },
-        });
-      }
-      
+  let users = await User.find();
+  if (!users) {
+    return next(new AppError("Cannot find users in the DB", 400));
+  }
+  res.status(200).json({
+    status: "Success",
+    data: {
+      requests: users,
+    },
+  });
 });
-
 exports.getUser = catchAsync(async (req, res, next) => {
-    
-    try{
-        let user = await User.findOne({indexNo:req.body.id});
-        res.status(200).json({
-          status: "Success",
-          data: {
-            requests: user,
-          },
-          id: req.query.id
-        });
-      
-      }catch(err){
-        res.status(400).json({
-          status: "Failed to get user",
-          data: {
-            err,
-          },
-        });
-      }
-      
+  let user = await User.findOne({ indexNo: req.body.id });
+  if (!user) {
+    return next(new AppError("Cannot find the specified user"), 401);
+  }
+  res.status(200).json({
+    status: "Success",
+    data: {
+      requests: user,
+    },
+    id: req.query.id,
+  });
 });
-
-
-exports.updatePassword = catchAsync(async (req, res, next) => {
-
-    try{
-        const pw = req.body.password
-        const cpw = req.body.passwordConfirm
-        if (pw === cpw){
-            let user = await User.findOne({indexNo:req.body.user_id});
-            let result = await User.findByIdAndUpdate(user.id,{password:pw, passwordConfirm:cpw});            
-            res.status(200).json({
-            status: "Success",
-            data: {
-                result: result,
-            },
-        });
-        }            
-        else{
-            res.status(200).json({
-                status: "Failure",
-                message: "Passwords mismatch"
-            })
-        }
-      
-      }catch(err){
-        res.status(400).json({
-          status: "Failed to approve",
-          data: {
-            err,
-          },
-        });
-      }
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const pw = req.body.password;
+  const cpw = req.body.passwordConfirm;
+  if (pw === cpw) {
+    let user = await User.findOne({ indexNo: req.body.user_id });
+    let result = await User.findByIdAndUpdate(user.id, {
+      password: pw,
+      passwordConfirm: cpw,
+    });
+    res.status(200).json({
+      status: "Success",
+      data: {
+        result: result,
+      },
+    });
+  } else {
+    return next(new AppError("Password Mismatch", 401));
+  }
 });

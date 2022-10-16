@@ -12,7 +12,6 @@ router.route("/").get(authController.protect, userController.getAllUsers);
 
 router
   .route("/id")
-  .post(userController.createUser)
   .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(authController.protect, userController.deleteUser);
