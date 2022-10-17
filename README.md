@@ -35,8 +35,12 @@ Used Models -
 #### 2. Request model - 
 A request is considered an object with properites such as request type, sender's details (index number, username), request information, 
 submitted date and the approval status. A request is in 'pending' status by default once it is sent. After the requestee has viewed it and decided to approve or decline it, then the approval status of the request will change accordingly. 
+The database design consists of the above 2 models.
+Behaviour driven development was used for development and testing of the system. 
+## Implementation
+* Front end - React, HTML/CSS
 
-Used Behaviour Driven development for development and testing the system.
+* Back end - Node.js, MongoDB
 
 ## Features
 
