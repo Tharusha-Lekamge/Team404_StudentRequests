@@ -7,21 +7,16 @@ import {
   ListItemIcon,
   Divider,
 } from "@mui/material";
-import { Folder, Person, Add } from "@mui/icons-material";
+import { Dashboard, People, Assignment } from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const StudentSidebar = (toggleSlider) => {
+const AdminSidebar = ({ toggleSlider }) => {
   return (
-    <Box
-      className="classes.MenudSliderContainer"
-      component="div"
-      sx={{ alignContent: "center" }}
-    >
+    <Box component="div" sx={{ alignContent: "center" }}>
       <Avatar
-        className="classes.avatar"
         src="https://i.ibb.co/rx5DFbs/avatar.png"
-        alt="Juaneme8"
+        alt="Admin"
         sx={{ alignItems: "center" }}
       />
       <Divider />
@@ -30,34 +25,39 @@ const StudentSidebar = (toggleSlider) => {
           <ListItem
             button
             component={Link}
-            to="newrequest"
+            to="/admin"
             onClick={toggleSlider}
           >
             <ListItemIcon>
-              <Add />
+              <Dashboard />
             </ListItemIcon>
-            <ListItemText primary="New Request" />
+            <ListItemText primary="Dashboard" />
           </ListItem>
         </ListItem>
         <ListItem>
           <ListItem
             button
             component={Link}
-            to="oldrequests"
+            to="/admin/requests"
             onClick={toggleSlider}
           >
             <ListItemIcon>
-              <Folder />
+              <Assignment />
             </ListItemIcon>
-            <ListItemText primary="Past Request" />
+            <ListItemText primary="All Requests" />
           </ListItem>
         </ListItem>
         <ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            component={Link}
+            to="/admin/users"
+            onClick={toggleSlider}
+          >
             <ListItemIcon>
-              <Person />
+              <People />
             </ListItemIcon>
-            <ListItemText primary="Profile" />
+            <ListItemText primary="Manage Users" />
           </ListItem>
         </ListItem>
       </List>
@@ -65,4 +65,4 @@ const StudentSidebar = (toggleSlider) => {
   );
 };
 
-export default StudentSidebar;
+export default AdminSidebar;

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import StudentSidebar from "../Student Sidebar";
+import AdminSidebar from "../Admin Sidebar";
 import { Menu } from "@mui/icons-material";
 
 export const AdminNavbar = () => {
@@ -30,7 +30,7 @@ export const AdminNavbar = () => {
             </IconButton>
             <Typography>Student Management System - Admin View</Typography>
             <Drawer open={open} anchor="left" onChange={toggleSlider}>
-              <StudentSidebar toggleSlider={toggleSlider} />
+              <AdminSidebar toggleSlider={toggleSlider} />
             </Drawer>
           </Toolbar>
         </AppBar>

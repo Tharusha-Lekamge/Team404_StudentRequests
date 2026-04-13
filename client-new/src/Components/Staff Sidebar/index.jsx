@@ -7,21 +7,16 @@ import {
   ListItemIcon,
   Divider,
 } from "@mui/material";
-import { Folder, Person, Add } from "@mui/icons-material";
+import { Inbox, Person } from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const StaffSidebar = (toggleSlider) => {
+const StaffSidebar = ({ toggleSlider }) => {
   return (
-    <Box
-      className="classes.MenudSliderContainer"
-      component="div"
-      sx={{ alignContent: "center" }}
-    >
+    <Box component="div" sx={{ alignContent: "center" }}>
       <Avatar
-        className="classes.avatar"
         src="https://i.ibb.co/rx5DFbs/avatar.png"
-        alt="Juaneme8"
+        alt="Staff"
         sx={{ alignItems: "center" }}
       />
       <Divider />
@@ -30,26 +25,13 @@ const StaffSidebar = (toggleSlider) => {
           <ListItem
             button
             component={Link}
-            to="newrequest"
+            to="viewrequest"
             onClick={toggleSlider}
           >
             <ListItemIcon>
-              <Add />
+              <Inbox />
             </ListItemIcon>
             <ListItemText primary="View Requests" />
-          </ListItem>
-        </ListItem>
-        <ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="oldrequests"
-            onClick={toggleSlider}
-          >
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Past Request" />
           </ListItem>
         </ListItem>
         <ListItem>

@@ -11,7 +11,7 @@ import { Folder, Person, Add } from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const StudentSidebar = (toggleSlider) => {
+const StudentSidebar = ({ toggleSlider }) => {
   return (
     <Box
       className="classes.MenudSliderContainer"
