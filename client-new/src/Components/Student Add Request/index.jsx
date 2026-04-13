@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -11,22 +10,55 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FormControl, Select, MenuItem, InputLabel, Card } from "@mui/material";
+import useToken from "../../hooks/useToken";
 
 const theme = createTheme();
 
+const decodeToken = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch {
+    return null;
+  }
+};
+
 export default function StudentNewRequest() {
-  const handleSubmit = (event) => {
+  const { token } = useToken();
+  const [submitError, setSubmitError] = React.useState(null);
+  const [submitted, setSubmitted] = React.useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    alert(
-      JSON.stringify({
-        subject: data.get("subject"),
-        index: data.get("index"),
-        name: data.get("name"),
-        type: data.get("type"),
-        additional: data.get("additional"),
-      })
-    );
+    const decoded = decodeToken(token);
+
+    const payload = {
+      userIndexNo: data.get("index"),
+      userName: data.get("name"),
+      user: decoded?.id ?? "",
+      requestType: data.get("type"),
+      requestInfo: data.get("subject"),
+      additionalDetails: data.get("additional"),
+      submittedDate: new Date().toISOString(),
+    };
+
+    try {
+      const res = await fetch("/api/v1/requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setSubmitError(json.message ?? "Submission failed");
+      } else {
+        setSubmitted(true);
+        setSubmitError(null);
+        event.target.reset();
+      }
+    } catch {
+      setSubmitError("Network error — please try again");
+    }
   };
 
   return (
@@ -52,6 +84,16 @@ export default function StudentNewRequest() {
           <Typography component="h1" variant="h5">
             New Request
           </Typography>
+          {submitted && (
+            <Typography color="success.main" sx={{ mt: 1 }}>
+              Request submitted successfully.
+            </Typography>
+          )}
+          {submitError && (
+            <Typography color="error" sx={{ mt: 1 }}>
+              {submitError}
+            </Typography>
+          )}
           <Box
             component="form"
             noValidate
@@ -67,7 +109,6 @@ export default function StudentNewRequest() {
             >
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="Subject"
                   name="subject"
                   required
                   fullWidth
@@ -78,13 +119,11 @@ export default function StudentNewRequest() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="Index Number"
                   name="index"
                   required
                   fullWidth
                   id="indexnumber"
                   label="Index Number"
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
@@ -94,7 +133,6 @@ export default function StudentNewRequest() {
                   id="name"
                   label="Name"
                   name="name"
-                  autoComplete="Name"
                 />
               </Grid>
               <Grid item xs={12} justifyContent="center">
@@ -106,16 +144,16 @@ export default function StudentNewRequest() {
                     name="type"
                     label="Request Type"
                     fullWidth
+                    defaultValue=""
                   >
-                    <MenuItem value={10}>Late Add/Drop</MenuItem>
-                    <MenuItem value={20}>Deadline Extension</MenuItem>
-                    <MenuItem value={30}>Repeat Exam</MenuItem>
+                    <MenuItem value="late-add-drop">Late Add/Drop</MenuItem>
+                    <MenuItem value="extend-deadline">Deadline Extension</MenuItem>
+                    <MenuItem value="repeat-as-first-attempt">Repeat Exam</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   multiline
                   id="additional"

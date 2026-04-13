@@ -18,7 +18,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 
 async function signUpUser(credentials) {
-  return fetch("http://localhost:3000/api/v1/user/signup", {
+  return fetch("/api/v1/user/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

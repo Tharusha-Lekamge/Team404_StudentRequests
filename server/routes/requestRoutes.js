@@ -12,7 +12,7 @@ router
 
 router
   .route("/get")
-  .get(requestController
+  .post(requestController
   .getRequestsbyStudentId);
 
   router

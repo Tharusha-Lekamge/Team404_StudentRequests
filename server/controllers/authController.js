@@ -12,7 +12,7 @@ const User = require("../models/userModel");
  */
 const signToken = (user) => {
   return jwt.sign(
-    { id: user.__id, username: user.username, type: user.accountType },
+    { id: user._id, username: user.username, type: user.accountType },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXPIRES,
@@ -97,7 +97,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // Checking for existence of username and password
   if (!username || !password) {
-    const errorString = "No valid ";
+    let errorString = "No valid ";
     if (!username) {
       errorString += "username ";
     }
@@ -110,11 +110,11 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ username }).select("+password");
 
   if (!user) {
-    return next(new AppError("Incorrect email"), 401);
+    return next(new AppError("Incorrect username", 401));
   }
 
   if (!(await user.correctPassword(password, user.password))) {
-    return next(new AppError("Incorrect password"), 401);
+    return next(new AppError("Incorrect password", 401));
   }
   // Send token to user
   const token = signToken(user);
@@ -144,15 +144,16 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // Validate token
-  // Converted the function to return a promise
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-  // Check if user exists
+  // Check if user still exists
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
+    return next(new AppError("The user belonging to this token no longer exists", 401));
+  }
 
-  // Check if user changed password after jwt is issued
+  // Attach user to request for downstream handlers
+  req.user = currentUser;
 
-  // Check accountType
-
-  // Give access
   next();
 });
