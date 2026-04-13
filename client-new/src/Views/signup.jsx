@@ -22,8 +22,6 @@ async function signUpUser(credentials) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST",
     },
     body: credentials,
   }).then((data) => data.json());

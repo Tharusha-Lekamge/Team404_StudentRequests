@@ -1,8 +1,14 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 const AppError = require("./utils/appError");
 
 const app = express();
+
+app.use(cors({
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+  credentials: true,
+}));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
