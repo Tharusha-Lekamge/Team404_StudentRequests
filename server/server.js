@@ -17,12 +17,7 @@ const DB = process.env.DB_STRING;
 // this .connect method generates a coneection object
 // Which is used in the callback function .then
 mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  })
+  .connect(DB)
   .then(() => {
     // eslint-disable-next-line no-console
     console.log("DB connection set");

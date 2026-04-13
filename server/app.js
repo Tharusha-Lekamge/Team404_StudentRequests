@@ -19,7 +19,7 @@ app.use("/api/v1/requests", requestRouter);
 
 // If the route does not match any of the above routes, code will reach here.
 // Then call this func for all HTTP method
-app.all('*', (req, res, next) => {
+app.all('*splat', (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl}`, 404));
 });
 

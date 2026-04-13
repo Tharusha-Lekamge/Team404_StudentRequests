@@ -1,16 +1,9 @@
 const chai = require("chai");
-const supertest = require("supertest");
+const chaiHttp = require("chai-http");
 const app = require("../server");
-var uuid = require("uuid");
-let chaiHttp = require("chai-http");
 
-global.uuid = uuid;
-global.expect = chai.expect;
-global.request = supertest(app);
-
-// Assertion style
-let should = chai.should();
 chai.use(chaiHttp);
+chai.should();
 
 describe("Request Controller", () => {
   // Get route
