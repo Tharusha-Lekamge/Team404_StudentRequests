@@ -46,3 +46,112 @@ Behaviour driven development was used for development and testing of the system.
 
 1. Error Handler
 2. 
+
+---
+
+## Running Locally
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v16 or later
+- [MongoDB Atlas](https://www.mongodb.com/atlas) account (or a local MongoDB instance)
+- npm (bundled with Node.js)
+
+---
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Tharusha-Lekamge/Team404_StudentRequests.git
+cd Team404_StudentRequests
+```
+
+---
+
+### 2. Configure the server environment
+
+Create `server/config.env` (this file is git-ignored — never commit it):
+
+```
+NODE_ENV=development
+port=3000
+DB_STRING=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
+JWT_SECRET=replace_with_a_long_random_string
+JWT_EXPIRES=90d
+```
+
+| Variable     | Description                                           |
+|--------------|-------------------------------------------------------|
+| `NODE_ENV`   | `development` enables detailed error output + Morgan  |
+| `port`       | Port the Express server listens on                    |
+| `DB_STRING`  | Full MongoDB connection URI                           |
+| `JWT_SECRET` | Secret used to sign and verify JWT tokens             |
+| `JWT_EXPIRES`| Token lifetime (e.g. `90d`, `1h`)                    |
+
+---
+
+### 3. Install server dependencies
+
+```bash
+cd server
+npm install
+```
+
+---
+
+### 4. Start the server
+
+```bash
+npm start
+```
+
+The server will start with **nodemon** (auto-restarts on file changes).  
+You should see:
+
+```
+DB connection set
+listening on port 3000
+```
+
+---
+
+### 5. Install client dependencies
+
+Open a **new terminal** tab/window:
+
+```bash
+cd client
+npm install
+```
+
+---
+
+### 6. Start the React dev server
+
+```bash
+npm start
+```
+
+The app opens at **http://localhost:3000** by default (CRA will offer an alternate port if 3000 is taken by the server — use the URL printed in the terminal).
+
+> **Note:** The client currently calls the API at `http://localhost:3000`. If the React dev server takes that port, the Express server must move to a different port (e.g. `3001`) and you must update the fetch URLs in the client accordingly. A `"proxy"` entry in `client/package.json` is the cleanest long-term fix — see [docs/.current-state.md](docs/.current-state.md) for details.
+
+---
+
+### 7. (Optional) Run the test suite
+
+```bash
+cd server
+npm test
+```
+
+---
+
+### 8. (Optional) Generate API documentation
+
+```bash
+cd server
+npm run docs
+```
+
+HTML docs will be written to `server/docs/`.
