@@ -44,7 +44,6 @@ export default function SignInSide({ setToken }) {
         password: data.get("password"),
       })
     );
-    alert(JSON.stringify(response));
     data.get("remember")
       ? setToken(response.token, "local")
       : setToken(response.token, "session");

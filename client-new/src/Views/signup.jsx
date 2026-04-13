@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Img from "../photos/Login.jpg";
-import { Link as RouterLink, Outlet } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 
 async function signUpUser(credentials) {
@@ -41,7 +41,6 @@ export default function SignUpSide({ setToken }) {
         accountType: data.get("select"),
       })
     );
-    alert(JSON.stringify(response));
     setToken(response.token, "session");
   };
 
@@ -148,7 +147,6 @@ export default function SignUpSide({ setToken }) {
           </Box>
         </Grid>
       </Grid>
-      <Outlet />
     </ThemeProvider>
   );
 }

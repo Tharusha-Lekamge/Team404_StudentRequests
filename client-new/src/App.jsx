@@ -15,7 +15,7 @@ import useToken from "./hooks/useToken";
 import { Navigate } from "react-router";
 
 function App() {
-  const { token, setToken } = useToken();
+  const { token, setToken, role } = useToken();
 
   if (!token) {
     return (
@@ -31,7 +31,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="" element={<Navigate to="student" replace />} />
+        <Route path="" element={<Navigate to={role} replace />} />
         <Route path="signup" element={<Student />} />
         <Route path="student" element={<Student />}>
           <Route path="newrequest" element={<StudentNewRequest />} />
