@@ -37,7 +37,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
   if (req.body.accountType === "admin") {
     return next(new AppError("Access denied to create an admin account", 401));
   } else {
-    const newUser = User.create({
+    const newUser = await User.create({
       username: req.body.username,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
@@ -66,7 +66,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
  * @apiErrorExample
  */
 exports.createAdmin = catchAsync(async (req, res, next) => {
-  const newUser = User.create({
+  const newUser = await User.create({
     username: req.body.username,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,

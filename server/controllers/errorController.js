@@ -18,7 +18,7 @@ const sendDevError = (err, req, res, next) => {
   res.status(err.statusCode).json({
     status: err.status,
     message: err.message,
-    error: error,
+    error: err,
     stack: err.stack,
   });
 };
@@ -73,6 +73,6 @@ module.exports = (err, req, res, next) => {
       error = handleCastError(err)
     }
     // Use this for uncommon errors only
-    sendProductionError((err, req, res, next));
+    sendProductionError(error, req, res, next);
   }
 };
