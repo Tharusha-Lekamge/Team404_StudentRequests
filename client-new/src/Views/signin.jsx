@@ -16,7 +16,7 @@ import Img from "../photos/Login.jpg";
 import { Link as RouterLink } from "react-router-dom";
 
 async function loginUser(credentials) {
-  return fetch("http://localhost:3000/api/v1/user/login", {
+  return fetch("/api/v1/user/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
